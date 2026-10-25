@@ -1,26 +1,21 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Radius, FontSize, Shadow } from '../constants/Colors';
 
-const { width } = Dimensions.get('window');
-const CARD_W = (width - 16 * 2 - 10) / 2;
-
 export default function DestinationCard({ destination: d, onPress, onFavorite, isFavorited }) {
+  const categoryColor = d.color_hex || Colors.primary;
+
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.85}>
-      {/* Thumbnail */}
       <View style={styles.imageWrap}>
         {d.cover_image_url ? (
-          <View style={styles.imageContainer}>
-            <View
-              style={[styles.imagePlaceholder, { backgroundColor: d.color_hex + '44' }]}
-            />
-            <Text style={styles.imageEmoji}>🏔</Text>
-          </View>
+          <ImageBackground source={{ uri: d.cover_image_url }} style={styles.imagePlaceholder} />
         ) : (
-          <View style={[styles.imagePlaceholder, { backgroundColor: (d.color_hex || '#555') + '44' }]}>
-            <Ionicons name={d.category_icon || 'map'} size={32} color={d.color_hex || Colors.textMuted} />
+          <View style={[styles.imagePlaceholder, { backgroundColor: `${categoryColor}18` }]}>
+            <View style={[styles.imageIconWrap, { backgroundColor: `${categoryColor}20` }]}>
+              <Ionicons name={d.category_icon || 'map-outline'} size={26} color={categoryColor} />
+            </View>
           </View>
         )}
         {onFavorite && (
@@ -28,17 +23,16 @@ export default function DestinationCard({ destination: d, onPress, onFavorite, i
             <Ionicons name={isFavorited ? 'heart' : 'heart-outline'} size={16} color={isFavorited ? Colors.error : Colors.white} />
           </TouchableOpacity>
         )}
-        <View style={[styles.catDot, { backgroundColor: d.color_hex || Colors.primary }]}>
+        <View style={[styles.catDot, { backgroundColor: categoryColor }]}>
           <Ionicons name={d.category_icon || 'map'} size={10} color="#fff" />
         </View>
       </View>
 
-      {/* Info */}
       <View style={styles.info}>
         <Text style={styles.name} numberOfLines={2}>{d.name}</Text>
         <View style={styles.locationRow}>
           <Ionicons name="location-outline" size={11} color={Colors.textMuted} />
-          <Text style={styles.location} numberOfLines={1}>{d.city}</Text>
+          <Text style={styles.location} numberOfLines={1}>{[d.city, d.province].filter(Boolean).join(', ') || 'Philippines'}</Text>
         </View>
         <View style={styles.bottomRow}>
           <View style={styles.ratingRow}>
@@ -55,18 +49,17 @@ export default function DestinationCard({ destination: d, onPress, onFavorite, i
 }
 
 const styles = StyleSheet.create({
-  card:          { backgroundColor: Colors.darkCard, borderRadius: Radius.md, overflow: 'hidden', borderWidth: 1, borderColor: Colors.darkBorder, ...Shadow.subtle },
-  imageWrap:     { position: 'relative', height: 110 },
-  imageContainer:{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' },
+  card:          { backgroundColor: Colors.darkCard, borderRadius: 18, overflow: 'hidden', borderWidth: 1, borderColor: Colors.darkBorder, ...Shadow.subtle },
+  imageWrap:     { position: 'relative', height: 128, backgroundColor: '#E7EDE7' },
   imagePlaceholder:{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' },
-  imageEmoji:    { fontSize: 32, position: 'absolute' },
-  favBtn:        { position: 'absolute', top: 6, right: 6, width: 28, height: 28, borderRadius: 14, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' },
-  catDot:        { position: 'absolute', bottom: 6, left: 6, width: 20, height: 20, borderRadius: 10, justifyContent: 'center', alignItems: 'center' },
-  info:          { padding: 10, gap: 4 },
+  imageIconWrap: { width: 48, height: 48, borderRadius: 17, justifyContent: 'center', alignItems: 'center' },
+  favBtn:        { position: 'absolute', top: 9, right: 9, width: 31, height: 31, borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.94)', justifyContent: 'center', alignItems: 'center' },
+  catDot:        { position: 'absolute', bottom: 8, left: 8, width: 23, height: 23, borderRadius: 12, justifyContent: 'center', alignItems: 'center' },
+  info:          { padding: 11, gap: 5 },
   name:          { color: Colors.text, fontSize: FontSize.sm, fontWeight: '700', lineHeight: 18 },
   locationRow:   { flexDirection: 'row', alignItems: 'center', gap: 2 },
   location:      { color: Colors.textMuted, fontSize: FontSize.xs, flex: 1 },
-  bottomRow:     { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 2 },
+  bottomRow:     { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 },
   ratingRow:     { flexDirection: 'row', alignItems: 'center', gap: 2 },
   rating:        { color: Colors.warning, fontSize: FontSize.xs, fontWeight: '700' },
   fee:           { color: Colors.accent, fontSize: FontSize.xs, fontWeight: '700' },

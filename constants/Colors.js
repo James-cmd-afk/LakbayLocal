@@ -1,17 +1,17 @@
 // Shared color palette and spacing tokens for LakbayLocal
 
 export const Colors = {
-  primary:    '#1B6CA8',   // Deep ocean blue
-  secondary:  '#F26419',   // Warm sunset orange
-  accent:     '#2EC4B6',   // Teal
+  primary:    '#285C4D',
+  secondary:  '#D97752',
+  accent:     '#397C70',
   success:    '#06D6A0',
-  warning:    '#FFB703',
+  warning:    '#E8A83E',
   error:      '#EF476F',
-  dark:       '#0D1B2A',
-  darkCard:   '#162032',
-  darkBorder: '#1E2D3D',
-  text:       '#F0F4F8',
-  textMuted:  '#8FA3B8',
+  dark:       '#F6F5F0',
+  darkCard:   '#FFFFFF',
+  darkBorder: '#E8E6DE',
+  text:       '#24352F',
+  textMuted:  '#7C8982',
   white:      '#FFFFFF',
   overlay:    'rgba(13,27,42,0.85)',
 };
@@ -45,18 +45,18 @@ export const FontSize = {
 
 export const Shadow = {
   card: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    shadowColor: '#33473D',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    elevation: 5,
   },
   subtle: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    elevation: 4,
+    shadowColor: '#33473D',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.08,
+    shadowRadius: 9,
+    elevation: 3,
   },
 };
 

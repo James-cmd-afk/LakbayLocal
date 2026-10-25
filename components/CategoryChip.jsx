@@ -19,6 +19,6 @@ export default function CategoryChip({ label, icon, color, active, onPress }) {
 }
 
 const styles = StyleSheet.create({
-  chip:  { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 14, paddingVertical: 8, borderRadius: Radius.full, backgroundColor: Colors.darkCard, borderWidth: 1.5, borderColor: Colors.darkBorder, marginRight: 8 },
+  chip:  { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 14, paddingVertical: 9, borderRadius: Radius.full, backgroundColor: Colors.darkCard, borderWidth: 1, borderColor: Colors.darkBorder, marginRight: 8 },
   label: { color: Colors.textMuted, fontSize: FontSize.xs, fontWeight: '700' },
 });

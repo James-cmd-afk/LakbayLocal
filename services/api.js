@@ -1,4 +1,9 @@
-const BASE_URL = 'http://localhost:5000/api';
+import { Platform } from 'react-native';
+
+const BASE_URL = (
+  process.env.EXPO_PUBLIC_API_URL ||
+  `http://${Platform.OS === 'android' ? '10.0.2.2' : 'localhost'}:5000/api`
+).replace(/\/$/, '');
 
 let authToken = null;
 
@@ -12,7 +17,17 @@ const request = async (method, path, data = null) => {
   const opts = { method, headers };
   if (data) opts.body = JSON.stringify(data);
 
-  const res = await fetch(`${BASE_URL}${path}`, opts);
+  let res;
+  try {
+    res = await fetch(`${BASE_URL}${path}`, opts);
+  } catch (error) {
+    const detail = error instanceof Error ? ` (${error.message})` : '';
+    throw new Error(
+      `Cannot reach the LakbayLocal API at ${BASE_URL}. ` +
+      "Start the backend and set EXPO_PUBLIC_API_URL to your computer's LAN address when using a physical phone." +
+      detail
+    );
+  }
   const json = await res.json();
   if (!res.ok) throw new Error(json.message || 'Request failed');
   return json;
